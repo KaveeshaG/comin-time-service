@@ -1,0 +1,20 @@
+# config.yaml
+server:
+  port: "8084"
+  timeouts:
+    read: 10    # seconds
+    write: 10   # seconds
+    idle: 60    # seconds
+
+database:
+  host: "ep-flat-shadow-a8onelva.eastus2.azure.neon.tech"
+  port: "5432"
+  user: "comin_owner"
+  password: "Ye5rfjcIB7FX"
+  dbname: "comin"
+  sslmode: "require"
+  max_open_conns: 20
+  max_idle_conns: 5
+
+qr:
+  size: 256     # QR code size in pixels

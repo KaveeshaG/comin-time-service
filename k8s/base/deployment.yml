@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comin-time-service
+  namespace: comin-dev
+  labels:
+    app: comin-time-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comin-time-service
+  template:
+    metadata:
+      labels:
+        app: comin-time-service
+    spec:
+      containers:
+      - name: comin-time-service
+        image: ghcr.io/kaveeshag/comin-time-service:dev
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8084
+        env:
+        - name: GO_ENV
+          value: "development"
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.2"
+            memory: "256Mi"
