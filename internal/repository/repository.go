@@ -13,7 +13,7 @@ type TimeRepository interface {
 	CreateAttendance(attendance *domain.Attendance) error
 	GetAttendanceByDate(employeeID uuid.UUID, date time.Time) (*domain.Attendance, error)
 	UpdateAttendance(attendance *domain.Attendance) error
-	ListAttendances(orgID, employeeID uuid.UUID, startDate, endDate time.Time) ([]domain.Attendance, error)
+	ListAttendances(orgID uuid.UUID) ([]domain.Attendance, error)
 
 	// QR Code methods
 	CreateQRCode(qrCode *domain.QRCode) error
@@ -60,9 +60,9 @@ func (r *timeRepository) UpdateAttendance(attendance *domain.Attendance) error {
 	return r.db.Model(&domain.Attendance{}).Where("id = ?", attendance.ID).Updates(attendance).Error
 }
 
-func (r *timeRepository) ListAttendances(orgID, employeeID uuid.UUID, startDate, endDate time.Time) ([]domain.Attendance, error) {
+func (r *timeRepository) ListAttendances(orgID uuid.UUID) ([]domain.Attendance, error) {
 	attendances := []domain.Attendance{}
-	err := r.db.Where("organization_id = ? AND employee_id = ? AND date BETWEEN ? AND ?", orgID, employeeID, startDate, endDate).Find(&attendances).Error
+	err := r.db.Where("organization_id = ?", orgID).Find(&attendances).Error
 	if err != nil {
 		return nil, err
 	}

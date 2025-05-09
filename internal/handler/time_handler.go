@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Axontik/comin-time-service/internal/domain"
 	"github.com/Axontik/comin-time-service/internal/service"
@@ -214,7 +213,6 @@ func (h *TimeHandler) DeleteTimesheet(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param organization_id path string true "Organization ID"
-// @Param employee_id path string true "Employee ID"
 // @Param start_date query string false "Start date (YYYY-MM-DD)"
 // @Param end_date query string false "End date (YYYY-MM-DD)"
 // @Success 200 {array} domain.Attendance
@@ -226,25 +224,19 @@ func (h *TimeHandler) ListAttendances(c *gin.Context) {
 		return
 	}
 
-	employeeID, err := uuid.Parse(c.Param("employee_id"))
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid employee id"})
-		return
-	}
+	// startDateStr := c.Query("start_date")
+	// startDate, err := time.Parse("2006-01-02", startDateStr)
+	// if err != nil {
+	// 	startDate = time.Time{}
+	// }
 
-	startDateStr := c.Query("start_date")
-	startDate, err := time.Parse("2006-01-02", startDateStr)
-	if err != nil {
-		startDate = time.Time{}
-	}
+	// endDateStr := c.Query("end_date")
+	// endDate, err := time.Parse("2006-01-02", endDateStr)
+	// if err != nil {
+	// 	endDate = time.Time{}
+	// }
 
-	endDateStr := c.Query("end_date")
-	endDate, err := time.Parse("2006-01-02", endDateStr)
-	if err != nil {
-		endDate = time.Time{}
-	}
-
-	attendances, err := h.timeService.ListAttendances(orgID, employeeID, startDate, endDate)
+	attendances, err := h.timeService.ListAttendances(orgID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -282,4 +274,3 @@ func (h *TimeHandler) GetEmployeeQRCodes(c *gin.Context) {
 
 	c.JSON(http.StatusOK, qrCodes)
 }
-

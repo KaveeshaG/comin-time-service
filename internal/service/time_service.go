@@ -23,7 +23,7 @@ type TimeService interface {
 	CheckOut(req *domain.CheckOutRequest) (*domain.Attendance, error)
 	GetAttendanceByDate(employeeID uuid.UUID, date time.Time) (*domain.Attendance, error)
 	GetAttendanceSummary(employeeID uuid.UUID, month, year int) (map[string]int, error)
-	ListAttendances(orgID, employeeID uuid.UUID, startDate, endDate time.Time) ([]domain.Attendance, error)
+	ListAttendances(orgID uuid.UUID) ([]domain.Attendance, error)
 
 	// Timesheet methods
 	CreateTimesheet(orgID, employeeID uuid.UUID, req *domain.CreateTimesheetRequest) (*domain.Timesheet, error)
@@ -193,8 +193,8 @@ func (s *timeService) GetAttendanceSummary(employeeID uuid.UUID, month, year int
 	return nil, nil
 }
 
-func (s *timeService) ListAttendances(orgID, employeeID uuid.UUID, startDate, endDate time.Time) ([]domain.Attendance, error) {
-	return s.timeRepo.ListAttendances(orgID, employeeID, startDate, endDate)
+func (s *timeService) ListAttendances(orgID uuid.UUID) ([]domain.Attendance, error) {
+	return s.timeRepo.ListAttendances(orgID)
 }
 
 func (s *timeService) CreateTimesheet(orgID, employeeID uuid.UUID, req *domain.CreateTimesheetRequest) (*domain.Timesheet, error) {
