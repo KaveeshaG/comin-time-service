@@ -57,7 +57,7 @@ func (r *timeRepository) GetAttendanceByDate(employeeID uuid.UUID, date time.Tim
 }
 
 func (r *timeRepository) UpdateAttendance(attendance *domain.Attendance) error {
-	return r.db.Model(&domain.Attendance{}).Updates(attendance).Error
+	return r.db.Model(&domain.Attendance{}).Where("id = ?", attendance.ID).Updates(attendance).Error
 }
 
 func (r *timeRepository) ListAttendances(orgID, employeeID uuid.UUID, startDate, endDate time.Time) ([]domain.Attendance, error) {
@@ -83,7 +83,7 @@ func (r *timeRepository) GetQRCode(code string) (*domain.QRCode, error) {
 }
 
 func (r *timeRepository) UpdateQRCode(qrCode *domain.QRCode) error {
-	return r.db.Model(&domain.QRCode{}).Updates(qrCode).Error
+	return r.db.Model(&domain.QRCode{}).Where("id = ?", qrCode.ID).Updates(qrCode).Error
 }
 
 func (r *timeRepository) ListQRCodes(employeeID uuid.UUID) ([]domain.QRCode, error) {
