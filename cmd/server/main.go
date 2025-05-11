@@ -142,7 +142,7 @@ func setupRouter(app *Application) *gin.Engine {
 	router.Use(middleware.ErrorHandler())
 
 	// Health check
-	router.GET("/health", app.healthHandler)
+	router.GET("/time/health", app.healthHandler)
 
 	// API routes
 	api := router.Group("/api/v1/time")
