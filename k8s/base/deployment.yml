@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: comin-time-service
-        image: ghcr.io/kaveeshag/comin-time-service:c6d8af2eba247b09fbdd1056ce64fede346b056f
+        image: ghcr.io/kaveeshag/comin-time-service:d97c780d41788bdeb0325d8bff31c7dc05219fe7
         imagePullPolicy: Always
         ports:
         - containerPort: 8084
